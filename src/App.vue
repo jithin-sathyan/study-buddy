@@ -9,7 +9,7 @@
       </div>
       <div class="course">
         <div class="course-main">
-          <div class="course-title" v-bind:title="description">{{ name }}</div>
+          <div class="course-title" :title="description">{{ name }}</div>
         </div>
       </div>
     </div>
