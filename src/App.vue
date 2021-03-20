@@ -15,13 +15,27 @@
             </header>
           </section>
           <section>
-            <p class="course-description">{{ description }} </p>
+            <p class="course-description">{{ description }}</p>
+          </section>
+          <section>
+            <h4>Prerquisites</h4>
+            <ul>
+              <li v-for="eachPrerequisite in prerequisites" :key="eachPrerequisite.id">
+                {{ eachPrerequisite.name }}
+              </li>
+            </ul>
           </section>
           <section class="course-actions">
-            <button class="action-button enroll" v-if="enrollmentStatus == 'Fresh'">
+            <button
+              class="action-button enroll"
+              v-if="enrollmentStatus == 'Fresh'"
+            >
               Enroll
             </button>
-            <button class="action-button enroll" v-else-if="enrollmentStatus == 'Enrolled'">
+            <button
+              class="action-button enroll"
+              v-else-if="enrollmentStatus == 'Enrolled'"
+            >
               Cancel
             </button>
           </section>
@@ -41,6 +55,7 @@ export default {
       currentEnrollments: 0,
       description: 'A basic course to understand the concept of Vue JS',
       enrollmentStatus: 'Fresh',
+      prerequisites: [{ name: 'HTML', id: '123' }, { name: 'CSS', id: '234' }, { name: 'JavaScript', id: '345' }],
     };
   },
 };
@@ -101,8 +116,8 @@ export default {
   font-size: 32px;
 }
 
-.course-description{
-    font-family: "Roboto", sans-serif;
+.course-description {
+  font-family: "Roboto", sans-serif;
 }
 
 .action-button {
