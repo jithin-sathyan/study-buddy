@@ -14,6 +14,17 @@
               {{ name }}
             </header>
           </section>
+          <section>
+            <p class="course-description">{{ description }} </p>
+          </section>
+          <section class="course-actions">
+            <button class="action-button enroll" v-if="enrollmentStatus == 'Fresh'">
+              Enroll
+            </button>
+            <button class="action-button enroll" v-else-if="enrollmentStatus == 'Enrolled'">
+              Cancel
+            </button>
+          </section>
         </article>
       </div>
     </article>
@@ -29,6 +40,7 @@ export default {
       enrollments: 50,
       currentEnrollments: 0,
       description: 'A basic course to understand the concept of Vue JS',
+      enrollmentStatus: 'Fresh',
     };
   },
 };
@@ -78,14 +90,30 @@ export default {
 
 .course {
   background: #9d46ff;
-  height: 180px;
-  width: 180px;
+  width: 232px;
   margin: 12px;
   padding: 12px;
+  border-radius: 4px;
 }
 
 .course-title {
   font-weight: 600;
   font-size: 32px;
+}
+
+.course-description{
+    font-family: "Roboto", sans-serif;
+}
+
+.action-button {
+  width: 100%;
+  height: 40px;
+  background: #0a00b6;
+  color: #ffffff;
+  font-family: "Blinker", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  border-radius: 4px;
+  border: unset;
 }
 </style>
