@@ -25,16 +25,22 @@
               </li>
             </ul>
           </section>
+          <section>
+            <h4>Enrollments</h4>
+            <p>{{currentEnrollments}} / {{enrollments}}</p>
+          </section>
           <section class="course-actions">
             <button
               class="action-button enroll"
               v-if="enrollmentStatus == 'Fresh'"
+              v-on:click="enroll()"
             >
               Enroll
             </button>
             <button
               class="action-button enroll"
               v-else-if="enrollmentStatus == 'Enrolled'"
+              v-on:click="cancel()"
             >
               Cancel
             </button>
@@ -57,6 +63,16 @@ export default {
       enrollmentStatus: 'Fresh',
       prerequisites: [{ name: 'HTML', id: '123' }, { name: 'CSS', id: '234' }, { name: 'JavaScript', id: '345' }],
     };
+  },
+  methods: {
+    enroll() {
+      this.enrollmentStatus = 'Enrolled';
+      this.currentEnrollments += 1;
+    },
+    cancel() {
+      this.enrollmentStatus = 'Fresh';
+      this.currentEnrollments -= 1;
+    },
   },
 };
 </script>
