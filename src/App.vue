@@ -32,7 +32,7 @@
           <section class="course-actions">
             <button
               class="action-button enroll"
-              :class="enroll_classes"
+              :class="{'enroll-hover': mouseOnCourse }"
               v-if="enrollmentStatus == 'Fresh'"
               v-on:click="enroll()"
             >
@@ -63,7 +63,7 @@ export default {
       description: 'A basic course to understand the concept of Vue JS',
       enrollmentStatus: 'Fresh',
       prerequisites: [{ name: 'HTML', id: '123' }, { name: 'CSS', id: '234' }, { name: 'JavaScript', id: '345' }],
-      enroll_classes: 'action-button enroll',
+      mouseOnCourse: false,
     };
   },
   methods: {
@@ -76,10 +76,10 @@ export default {
       this.currentEnrollments -= 1;
     },
     highlight_enroll() {
-      this.enroll_classes = 'action-button enroll enroll-hover';
+      this.mouseOnCourse = true;
     },
     dehighlight_enroll() {
-      this.enroll_classes = 'action-button enroll';
+      this.mouseOnCourse = false;
     },
   },
 };
