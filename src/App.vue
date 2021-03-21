@@ -27,7 +27,7 @@
           </section>
           <section>
             <h4>Enrollments</h4>
-            <p>{{currentEnrollments}} / {{enrollments}}</p>
+            <p>{{ enrollmentStats }}</p>
           </section>
           <section class="course-actions">
             <button
@@ -80,6 +80,11 @@ export default {
     },
     dehighlight_enroll() {
       this.mouseOnCourse = false;
+    },
+  },
+  computed: {
+    enrollmentStats() {
+      return (`${this.currentEnrollments}/${this.enrollments}`);
     },
   },
 };
