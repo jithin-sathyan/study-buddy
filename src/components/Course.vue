@@ -61,21 +61,21 @@
       <div class="feedback-div" v-show="feedbackOpen">
         <ol>
           <li v-for="review in reviews" :key="review.name">
-            {{review.name}}: {{review.message}}: ({{review.rating}}/5)
+            {{ review.name }}: {{ review.message }}: ({{ review.rating }}/5)
           </li>
         </ol>
-        <CourseReview @message-submitted="addMessage"/>
+        <CourseTabs @get-avg-feedback="setAvgFeedback" />
       </div>
     </section>
   </article>
 </template>
 
 <script>
-import CourseReview from './CourseReview';
+import CourseTabs from './CourseTabs';
 
 export default {
   name: 'Course',
-  components: { CourseReview },
+  components: { CourseTabs },
   props: {
     limit: {
       type: Number,
@@ -102,6 +102,7 @@ export default {
       id: 1,
       reviews: [],
       feedbackOpen: false,
+      avgFeedback: 'NA',
     };
   },
   methods: {
@@ -127,20 +128,19 @@ export default {
     feedbackSection(shouldOpen) {
       this.feedbackOpen = shouldOpen;
     },
+    setAvgFeedback(feedbackValue) {
+      this.avgFeedback = feedbackValue;
+    },
   },
   computed: {
     enrollmentStats() {
       return `${this.currentEnrollments}/${this.limit}`;
     },
     averageFeedback() {
-      if (this.reviews.length === 0) {
-        return 'NA';
+      if (typeof this.avgFeedback === 'number') {
+        return `${this.avgFeedback}/5`;
       }
-      let sumRating = 0;
-      for (let i = 0; this.reviews.length; i += 1) {
-        sumRating += this.reviews[i].rating;
-      }
-      return `${sumRating} / ${this.reviews.length} /5`;
+      return this.avgFeedback;
     },
   },
 };
