@@ -44,12 +44,38 @@
         Cancel
       </button>
     </section>
+    <hr />
+    <section class="feedback">
+      <p class="feedback-bar">
+        <span title="Average Feedback">Feedback: {{ averageFeedback }} </span>
+        <span
+          v-if="feedbackOpen"
+          class="feedback-view"
+          v-on:click="feedbackSection(false)"
+          >Hide</span
+        >
+        <span v-else class="feedback-view" v-on:click="feedbackSection(true)"
+          >View Feedback</span
+        >
+      </p>
+      <div class="feedback-div" v-show="feedbackOpen">
+        <ol>
+          <li v-for="review in reviews" :key="review.name">
+            {{review.name}}: {{review.message}}: ({{review.rating}}/5)
+          </li>
+        </ol>
+        <CourseReview @message-submitted="addMessage"/>
+      </div>
+    </section>
   </article>
 </template>
 
 <script>
+import CourseReview from './CourseReview';
+
 export default {
   name: 'Course',
+  components: { CourseReview },
   props: {
     limit: {
       type: Number,
@@ -73,6 +99,9 @@ export default {
         { name: 'JavaScript', id: '345' },
       ],
       mouseOnCourse: false,
+      id: 1,
+      reviews: [],
+      feedbackOpen: false,
     };
   },
   methods: {
@@ -92,10 +121,26 @@ export default {
     dehighlight_enroll() {
       this.mouseOnCourse = false;
     },
+    addMessage(courseReview) {
+      this.reviews.push(courseReview);
+    },
+    feedbackSection(shouldOpen) {
+      this.feedbackOpen = shouldOpen;
+    },
   },
   computed: {
     enrollmentStats() {
       return `${this.currentEnrollments}/${this.limit}`;
+    },
+    averageFeedback() {
+      if (this.reviews.length === 0) {
+        return 'NA';
+      }
+      let sumRating = 0;
+      for (let i = 0; this.reviews.length; i += 1) {
+        sumRating += this.reviews[i].rating;
+      }
+      return `${sumRating} / ${this.reviews.length} /5`;
     },
   },
 };
@@ -104,7 +149,8 @@ export default {
 <style scoped>
 .course {
   background: #9d46ff;
-  width: 232px;
+  height: max-content;
+  width: 420px;
   margin: 12px;
   padding: 12px;
   border-radius: 4px;
