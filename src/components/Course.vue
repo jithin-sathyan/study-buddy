@@ -56,6 +56,10 @@ export default {
       required: true,
       default: 20,
     },
+    courseId: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -75,10 +79,12 @@ export default {
     enroll() {
       this.enrollmentStatus = 'Enrolled';
       this.currentEnrollments += 1;
+      this.$emit('course-enroll-event', this.courseId);
     },
     cancel() {
       this.enrollmentStatus = 'Fresh';
       this.currentEnrollments -= 1;
+      this.$emit('course-cancel-event', this.courseId);
     },
     highlight_enroll() {
       this.mouseOnCourse = true;
