@@ -4,11 +4,22 @@
       <header class="header">
         <section class="brand">Study Buddy</section>
         <section class="total-enrollments" title="Your enrollments">
-          {{ currentEnrollments }}
+          {{ currentEnrollments.length }}
         </section>
       </header>
       <div class="course-card-container">
-        <Course :limit="enrollments"/>
+        <Course
+          :limit="enrollments"
+          :courseId="course - vue - 1"
+          @course-enroll-event="handleCourseEnroll"
+          @course-cancel-event="handleCourseCancel"
+        />
+        <Course
+          :limit="enrollments"
+          :courseId="course - vue - 2"
+          @course-enroll-event="handleCourseEnroll"
+          @course-cancel-event="handleCourseCancel"
+        />
       </div>
     </article>
   </div>
@@ -23,8 +34,19 @@ export default {
   data() {
     return {
       enrollments: 50,
-      currentEnrollments: 0,
+      currentEnrollments: [],
     };
+  },
+  methods: {
+    handleCourseEnroll(courseId) {
+      this.currentEnrollments.push(courseId);
+    },
+    handleCourseCancel(courseId) {
+      const courseIdIndex = this.currentEnrollments.indexOf(courseId);
+      if (courseIdIndex) {
+        this.currentEnrollments.splice(courseIdIndex, 1);
+      }
+    },
   },
 };
 </script>
